@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(fewer-permission-prompts)",
+      "Skill(fewer-permission-prompts:*)",
+      "Bash(python3)",
+      "Bash(ls \"c:/Users/bobby/Desktop/\" 2>/dev/null | grep -i \"logo\\\\|simple\" ; ls \"c:/Users/bobby/Downloads/\" 2>/dev/null | grep -i \"logo\\\\|simple\" ; ls \"c:/Users/bobby/OneDrive/Desktop/\" 2>/dev/null | grep -i \"logo\\\\|simple\")",
+      "Read(//c/Users/bobby/**)",
+      "Read(//c/Users/bobby/Downloads/**)",
+      "Read(//c/Users/bobby/OneDrive/Desktop/**)",
+      "Bash(cp \"c:/Users/bobby/Downloads/SimpleLister.png\" \"c:/Users/bobby/OneDrive/Documents/1webdev/simplelistr/public/logo.png\")"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\bobby\\Downloads"
+    ]
+  }
+}
