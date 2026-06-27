@@ -1,110 +1,48 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import { ArrowRight } from "lucide-react";
+import { createClient } from "@/lib/supabase/client";
 
 interface WaitlistButtonProps {
   variant?: "light" | "dark";
+  waitlisted?: boolean;
 }
 
-export function WaitlistButton({ variant = "light" }: WaitlistButtonProps) {
-  const [open, setOpen] = useState(false);
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (open && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [open]);
-
+export function WaitlistButton({ variant = "light", waitlisted = false }: WaitlistButtonProps) {
   const isLight = variant === "light";
 
-  function validateEmail(value: string) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-  }
+  const baseClasses = `flex items-center justify-center rounded-full h-14 px-6 text-sm font-medium transition-colors ${
+    isLight
+      ? "bg-foreground text-background hover:bg-foreground/90"
+      : "bg-primary-foreground text-foreground hover:bg-primary-foreground/90"
+  }`;
 
-  function handleSubmit() {
-    if (!validateEmail(email)) {
-      setError(true);
-      inputRef.current?.focus();
-      return;
-    }
-    setError(false);
-    setSubmitted(true);
-  }
-
-  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (e.key === "Enter") handleSubmit();
-  }
-
-  if (submitted) {
+  if (waitlisted) {
     return (
-      <div
-        className={`flex items-center justify-center w-72 rounded-full h-14 px-6 text-sm font-medium ${
-          isLight ? "bg-foreground text-background" : "bg-primary-foreground text-foreground"
-        }`}
-      >
+      <div className={`${baseClasses} w-72 cursor-default`}>
         You&apos;re on the list ✓
       </div>
     );
   }
 
+  async function handleJoinWaitlist() {
+    const supabase = createClient();
+    await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
+      },
+    });
+  }
+
   return (
-    <div className="flex flex-col gap-1">
-      <div
-        className={`flex items-center overflow-hidden transition-all duration-300 ease-in-out ${
-          isLight
-            ? "bg-foreground text-background"
-            : "bg-primary-foreground text-foreground"
-        } ${open ? "w-72 rounded-full pr-2" : "w-40 rounded-full"} h-14 ${
-          error ? "ring-2 ring-destructive" : ""
-        }`}
-      >
-        {!open ? (
-          <button
-            type="button"
-            onClick={() => setOpen(true)}
-            className="flex items-center justify-center gap-2 w-full h-full px-6 text-sm font-medium group"
-          >
-            Join Waitlist
-            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-          </button>
-        ) : (
-          <>
-            <input
-              ref={inputRef}
-              type="email"
-              value={email}
-              onChange={(e) => { setEmail(e.target.value); if (error) setError(false); }}
-              onKeyDown={handleKeyDown}
-              placeholder="your@email.com"
-              className={`flex-1 h-full bg-transparent px-5 text-sm outline-none placeholder:opacity-50 ${
-                isLight ? "text-background" : "text-foreground"
-              }`}
-            />
-            <button
-              type="button"
-              onClick={handleSubmit}
-              aria-label="Submit email"
-              className={`shrink-0 flex items-center justify-center w-10 h-10 rounded-full transition-colors ${
-                isLight
-                  ? "bg-background text-foreground hover:bg-background/90"
-                  : "bg-foreground text-background hover:bg-foreground/90"
-              }`}
-            >
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </>
-        )}
-      </div>
-      {error && (
-        <p className={`text-xs px-1 ${isLight ? "text-destructive" : "text-destructive"}`}>
-          Please enter a valid email.
-        </p>
-      )}
-    </div>
+    <button
+      type="button"
+      onClick={handleJoinWaitlist}
+      className={`${baseClasses} w-48 gap-2 group`}
+    >
+      Join Waitlist
+      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+    </button>
   );
 }
