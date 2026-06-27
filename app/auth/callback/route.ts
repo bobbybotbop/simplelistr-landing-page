@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import { addToWaitlist } from "@/lib/waitlist";
 
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url);
@@ -38,15 +39,13 @@ export async function GET(request: NextRequest) {
 
   const { email, id: userId } = data.session.user;
 
-  // Call the waitlist API
-  const res = await fetch(`${origin}/api/waitlist`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, userId }),
-  });
+  if (!email) {
+    return NextResponse.redirect(`${origin}/?error=true`);
+  }
 
-  // 409 = already on list — still treat as success
-  if (!res.ok && res.status !== 409) {
+  const result = await addToWaitlist(email, userId);
+
+  if ("error" in result) {
     return NextResponse.redirect(`${origin}/?error=true`);
   }
 

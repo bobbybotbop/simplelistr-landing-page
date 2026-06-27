@@ -1,37 +1,28 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createServiceClient } from "@/lib/supabase/server";
-import { resend } from "@/lib/resend";
-import { waitlistConfirmationHtml } from "@/lib/email-templates";
+import { addToWaitlist } from "@/lib/waitlist";
 
 export async function POST(request: NextRequest) {
-  const { email, userId } = await request.json();
+  let body: { email?: unknown; userId?: unknown };
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+  }
 
-  if (!email || !userId) {
+  const { email, userId } = body;
+
+  if (!email || !userId || typeof email !== "string" || typeof userId !== "string") {
     return NextResponse.json({ error: "Missing email or userId" }, { status: 400 });
   }
 
-  const supabase = createServiceClient();
+  const result = await addToWaitlist(email, userId);
 
-  const { error: insertError } = await supabase
-    .from("waitlist")
-    .insert({ email, user_id: userId });
-
-  if (insertError) {
-    // unique constraint violation — already on list
-    if (insertError.code === "23505") {
-      return NextResponse.json({ alreadyOnList: true }, { status: 409 });
-    }
-    console.error("Waitlist insert error:", insertError);
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+  if ("alreadyOnList" in result) {
+    return NextResponse.json({ alreadyOnList: true }, { status: 409 });
   }
-
-  // Non-blocking: send confirmation email
-  resend.emails.send({
-    from: process.env.RESEND_FROM_EMAIL!,
-    to: email,
-    subject: "You're on the SimpleListr waitlist",
-    html: waitlistConfirmationHtml(email),
-  }).catch((err) => console.error("Resend send error:", err));
+  if ("error" in result) {
+    return NextResponse.json({ error: result.error }, { status: 500 });
+  }
 
   return NextResponse.json({ success: true });
 }
