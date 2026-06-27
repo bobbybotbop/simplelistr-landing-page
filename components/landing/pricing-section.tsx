@@ -6,8 +6,9 @@ import { WaitlistButton } from "./waitlist-button";
 const pioneer = {
   name: "Pioneer",
   badge: "Waitlist Early Access",
-  description: "This tier is intentionally limited and only available at this level because you joined the waitlist early.",
-  price: "Free — 1 month",
+  description:
+    "Reserve your limited time spot, early supporters will get an exclusive free month, and access to a discord community.",
+  price: "1 month free",
   features: [
     "50 listings per month",
     "50 AI image editing credits per month",
@@ -56,9 +57,11 @@ const paidPlans = [
 
 export function PricingSection() {
   return (
-    <section id="pricing" className="relative py-32 lg:py-40 border-t border-foreground/10">
+    <section
+      id="pricing"
+      className="relative py-32 lg:py-40 border-t border-foreground/10"
+    >
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
-
         {/* Header */}
         <div className="max-w-3xl mb-20">
           <span className="font-mono text-xs tracking-widest text-muted-foreground uppercase block mb-6">
@@ -70,7 +73,8 @@ export function PricingSection() {
             <span className="text-stroke">pricing</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-xl">
-            Prices will change as SimpleListr grows — our goal is to keep it as affordable as possible.
+            Prices will change as SimpleListr grows — our goal is to keep it as
+            affordable as possible.
           </p>
         </div>
 
@@ -83,15 +87,25 @@ export function PricingSection() {
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Left */}
             <div>
-              <span className="font-mono text-xs text-primary-foreground/50">01</span>
-              <h3 className="font-display text-4xl text-primary-foreground mt-2 mb-3">{pioneer.name}</h3>
-              <p className="text-sm text-primary-foreground/60 mb-8">{pioneer.description}</p>
+              <span className="font-mono text-xs text-primary-foreground/50">
+                01
+              </span>
+              <h3 className="font-display text-4xl text-primary-foreground mt-2 mb-3">
+                {pioneer.name}
+              </h3>
+              <p className="text-sm text-primary-foreground/60 mb-8">
+                {pioneer.description}
+              </p>
 
               <div className="mb-6 pb-6 border-b border-primary-foreground/20">
-                <span className="font-display text-4xl text-primary-foreground">{pioneer.price}</span>
+                <span className="font-display text-4xl text-primary-foreground">
+                  {pioneer.price}
+                </span>
               </div>
 
-              <p className="text-xs text-primary-foreground/50 mb-8">{pioneer.note}</p>
+              <p className="text-xs text-primary-foreground/50 mb-8">
+                {pioneer.note}
+              </p>
 
               <WaitlistButton variant="dark" />
             </div>
@@ -101,7 +115,9 @@ export function PricingSection() {
               {pioneer.features.map((f) => (
                 <li key={f} className="flex items-start gap-3">
                   <Check className="w-4 h-4 text-primary-foreground mt-0.5 shrink-0" />
-                  <span className="text-sm text-primary-foreground/80">{f}</span>
+                  <span className="text-sm text-primary-foreground/80">
+                    {f}
+                  </span>
                 </li>
               ))}
             </ul>
@@ -120,11 +136,17 @@ export function PricingSection() {
               <span className="font-mono text-xs text-muted-foreground">
                 {String(idx + 2).padStart(2, "0")}
               </span>
-              <h3 className="font-display text-3xl text-foreground mt-2 mb-2">{plan.name}</h3>
-              <p className="text-sm text-muted-foreground mb-8">{plan.description}</p>
+              <h3 className="font-display text-3xl text-foreground mt-2 mb-2">
+                {plan.name}
+              </h3>
+              <p className="text-sm text-muted-foreground mb-8">
+                {plan.description}
+              </p>
 
               <div className="mb-8 pb-8 border-b border-foreground/10">
-                <span className="font-display text-4xl text-foreground">{plan.price}</span>
+                <span className="font-display text-4xl text-foreground">
+                  {plan.price}
+                </span>
               </div>
 
               <ul className="space-y-4 mb-10">
@@ -151,14 +173,15 @@ export function PricingSection() {
         {/* Bottom notes */}
         <div className="mt-12 space-y-3 text-center text-sm text-muted-foreground">
           <p>
-            A free tier will eventually be available — but it will include roughly a quarter of the features
-            and fewer benefits compared to joining the waitlist now.
+            A free tier will eventually be available — but it will include
+            roughly a quarter of the features and fewer benefits compared to
+            joining the waitlist now.
           </p>
           <p className="text-xs">
-            Prices are subject to change. We're committed to keeping SimpleListr affordable.
+            Prices are subject to change. We're committed to keeping SimpleListr
+            affordable.
           </p>
         </div>
-
       </div>
     </section>
   );

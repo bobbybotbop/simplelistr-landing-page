@@ -1,0 +1,13 @@
+{
+  "extraKnownMarketplaces": {
+    "supabase-agent-skills": {
+      "source": {
+        "source": "github",
+        "repo": "supabase/agent-skills"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "supabase@supabase-agent-skills": true
+  }
+}
