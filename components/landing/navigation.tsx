@@ -31,6 +31,7 @@ export function Navigation() {
       await signInForWaitlist();
     } catch (err) {
       console.error("OAuth error:", err);
+    } finally {
       setIsLoading(false);
     }
   }

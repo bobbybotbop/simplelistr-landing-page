@@ -33,6 +33,7 @@ export function WaitlistButton({ variant = "light", waitlisted = false }: Waitli
       await signInForWaitlist();
     } catch (err) {
       console.error("OAuth error:", err);
+    } finally {
       setIsLoading(false);
     }
   }
