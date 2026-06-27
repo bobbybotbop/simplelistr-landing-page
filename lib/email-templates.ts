@@ -1,4 +1,14 @@
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 export function waitlistConfirmationHtml(email: string): string {
+  const safe = escapeHtml(email);
   return `<!DOCTYPE html>
 <html>
   <head><meta charset="utf-8" /></head>
@@ -9,7 +19,7 @@ export function waitlistConfirmationHtml(email: string): string {
           You&apos;re on the list.
         </h1>
         <p style="font-size:16px;color:#555555;line-height:1.6;margin:0 0 16px;">
-          We&apos;ve saved your spot for <strong style="color:#111111;">${email}</strong>.
+          We&apos;ve saved your spot for <strong style="color:#111111;">${safe}</strong>.
         </p>
         <p style="font-size:16px;color:#555555;line-height:1.6;margin:0 0 40px;">
           We&apos;ll reach out when SimpleListr is ready to launch. Thanks for your
