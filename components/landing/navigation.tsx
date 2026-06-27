@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
-import { createClient } from "@/lib/supabase/client";
+import { signInForWaitlist } from "@/lib/auth";
 
 const navLinks = [
   { name: "Features", href: "#features" },
@@ -15,6 +15,7 @@ const navLinks = [
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,13 +26,13 @@ export function Navigation() {
   }, []);
 
   async function handleJoinWaitlist() {
-    const supabase = createClient();
-    await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
-      },
-    });
+    setIsLoading(true);
+    try {
+      await signInForWaitlist();
+    } catch (err) {
+      console.error("OAuth error:", err);
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -89,9 +90,10 @@ export function Navigation() {
             <Button
               size="sm"
               onClick={handleJoinWaitlist}
-              className={`bg-foreground hover:bg-foreground/90 text-background rounded-full transition-all duration-500 ${isScrolled ? "px-4 h-8 text-xs" : "px-6"}`}
+              disabled={isLoading}
+              className={`bg-foreground hover:bg-foreground/90 text-background rounded-full transition-all duration-500 disabled:opacity-60 ${isScrolled ? "px-4 h-8 text-xs" : "px-6"}`}
             >
-              Join waitlist
+              {isLoading ? "Redirecting…" : "Join waitlist"}
             </Button>
           </div>
 
@@ -147,10 +149,11 @@ export function Navigation() {
             style={{ transitionDelay: isMobileMenuOpen ? "300ms" : "0ms" }}
           >
             <Button
-              className="flex-1 bg-foreground text-background rounded-full h-14 text-base"
+              className="flex-1 bg-foreground text-background rounded-full h-14 text-base disabled:opacity-60"
+              disabled={isLoading}
               onClick={() => { setIsMobileMenuOpen(false); handleJoinWaitlist(); }}
             >
-              Join waitlist
+              {isLoading ? "Redirecting…" : "Join waitlist"}
             </Button>
           </div>
         </div>
