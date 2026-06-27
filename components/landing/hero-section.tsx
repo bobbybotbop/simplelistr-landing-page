@@ -2,11 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { WaitlistButton } from "./waitlist-button";
-// import { AnimatedSphere } from "./animated-sphere";
 
 const words = ["list", "research", "write", "scale", "optimize"];
 
-export function HeroSection() {
+interface HeroSectionProps {
+  waitlisted?: boolean;
+}
+
+export function HeroSection({ waitlisted = false }: HeroSectionProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [wordIndex, setWordIndex] = useState(0);
 
@@ -23,39 +26,25 @@ export function HeroSection() {
 
   return (
     <section className="relative min-h-screen flex flex-col justify-center overflow-hidden">
-      {/* Animated sphere background — commented out */}
-      {/* <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[600px] h-[600px] lg:w-[800px] lg:h-[800px] opacity-40 pointer-events-none">
-        <AnimatedSphere />
-      </div> */}
-
       {/* Subtle grid lines */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
         {[...Array(8)].map((_, i) => (
           <div
             key={`h-${i}`}
             className="absolute h-px bg-foreground/10"
-            style={{
-              top: `${12.5 * (i + 1)}%`,
-              left: 0,
-              right: 0,
-            }}
+            style={{ top: `${12.5 * (i + 1)}%`, left: 0, right: 0 }}
           />
         ))}
         {[...Array(12)].map((_, i) => (
           <div
             key={`v-${i}`}
             className="absolute w-px bg-foreground/10"
-            style={{
-              left: `${8.33 * (i + 1)}%`,
-              top: 0,
-              bottom: 0,
-            }}
+            style={{ left: `${8.33 * (i + 1)}%`, top: 0, bottom: 0 }}
           />
         ))}
       </div>
 
       <div className="relative z-10 max-w-350 mx-auto px-6 lg:px-12 py-32 lg:py-40">
-        {/* Eyebrow */}
         <div
           className={`mb-8 transition-all duration-700 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
@@ -67,13 +56,10 @@ export function HeroSection() {
           </span>
         </div>
 
-        {/* Main headline */}
         <div className="mb-12">
           <h1
             className={`text-[clamp(3rem,12vw,10rem)] font-display leading-[0.9] tracking-tight transition-all duration-1000 ${
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-8"
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
             <span className="block">SimpleListr</span>
@@ -96,28 +82,22 @@ export function HeroSection() {
           </h1>
         </div>
 
-        {/* Description */}
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-end">
           <p
             className={`text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-xl transition-all duration-700 delay-200 ${
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-4"
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             }`}
           >
             Use SimpleListr to research, write, and list infinite listings
             automatically. List infinitely. Scale infinitely.
           </p>
 
-          {/* CTA */}
           <div
             className={`flex items-start transition-all duration-700 delay-300 ${
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-4"
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             }`}
           >
-            <WaitlistButton variant="light" />
+            <WaitlistButton variant="light" waitlisted={waitlisted} />
           </div>
         </div>
       </div>

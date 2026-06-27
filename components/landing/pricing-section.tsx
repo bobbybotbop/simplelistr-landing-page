@@ -55,7 +55,11 @@ const paidPlans = [
   },
 ];
 
-export function PricingSection() {
+interface PricingSectionProps {
+  waitlisted?: boolean;
+}
+
+export function PricingSection({ waitlisted = false }: PricingSectionProps) {
   return (
     <section
       id="pricing"
@@ -107,7 +111,7 @@ export function PricingSection() {
                 {pioneer.note}
               </p>
 
-              <WaitlistButton variant="dark" />
+              <WaitlistButton variant="dark" waitlisted={waitlisted} />
             </div>
 
             {/* Right — features */}
