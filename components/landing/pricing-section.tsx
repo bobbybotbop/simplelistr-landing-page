@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Check, Lock } from "lucide-react";
 import { WaitlistButton } from "./waitlist-button";
 
@@ -59,7 +60,27 @@ interface PricingSectionProps {
   waitlisted?: boolean;
 }
 
+function useScrollReveal() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect(); } },
+      { threshold: 0.1 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+  return { ref, visible };
+}
+
 export function PricingSection({ waitlisted = false }: PricingSectionProps) {
+  const headerReveal = useScrollReveal();
+  const pioneerReveal = useScrollReveal();
+  const paidReveal = useScrollReveal();
+
   return (
     <section
       id="pricing"
@@ -67,7 +88,10 @@ export function PricingSection({ waitlisted = false }: PricingSectionProps) {
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         {/* Header */}
-        <div className="max-w-3xl mb-20">
+        <div
+          ref={headerReveal.ref}
+          className={`max-w-3xl mb-20 transition-all duration-700 ${headerReveal.visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+        >
           <span className="font-mono text-xs tracking-widest text-muted-foreground uppercase block mb-6">
             Pricing
           </span>
@@ -83,9 +107,12 @@ export function PricingSection({ waitlisted = false }: PricingSectionProps) {
         </div>
 
         {/* Pioneer — Featured */}
-        <div className="relative mb-px">
+        <div
+          ref={pioneerReveal.ref}
+          className={`relative mb-px transition-all duration-700 delay-100 ${pioneerReveal.visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+        >
           {/* Glow */}
-          <div className="absolute -inset-1 bg-linear-to-r from-pink-400 via-purple-500 to-pink-400 opacity-50 blur-xl rounded-sm pointer-events-none" />
+          <div className="absolute -inset-1 bg-linear-to-r from-pink-400 via-purple-500 to-pink-400 opacity-50 blur-xl rounded-sm pointer-events-none" aria-hidden="true" />
         <div className="relative bg-foreground text-primary-foreground p-8 lg:p-12 border-2 border-foreground">
           <span className="absolute -top-3 left-8 px-3 py-1 bg-primary-foreground text-foreground text-xs font-mono uppercase tracking-widest">
             {pioneer.badge}
@@ -133,49 +160,55 @@ export function PricingSection({ waitlisted = false }: PricingSectionProps) {
         </div>
 
         {/* Paid plans — grayed out */}
-        <div className="grid md:grid-cols-2 gap-px bg-foreground/10 opacity-50">
-          {paidPlans.map((plan, idx) => (
-            <div key={plan.name} className="relative p-8 lg:p-12 bg-background">
-              <div className="absolute top-4 right-4 flex items-center gap-1.5 text-xs font-mono text-muted-foreground">
-                <Lock className="w-3 h-3" />
-                Coming soon
-              </div>
+        <div
+          ref={paidReveal.ref}
+          className={`transition-all duration-700 delay-200 ${paidReveal.visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+        >
+          <div className="grid md:grid-cols-2 gap-px bg-foreground/10 opacity-50">
+            {paidPlans.map((plan, idx) => (
+              <div key={plan.name} className="relative p-8 lg:p-12 bg-background">
+                <div className="absolute top-4 right-4 flex items-center gap-1.5 text-xs font-mono text-muted-foreground">
+                  <Lock className="w-3 h-3" />
+                  Coming soon
+                </div>
 
-              <span className="font-mono text-xs text-muted-foreground">
-                {String(idx + 2).padStart(2, "0")}
-              </span>
-              <h3 className="font-display text-3xl text-foreground mt-2 mb-2">
-                {plan.name}
-              </h3>
-              <p className="text-sm text-muted-foreground mb-8">
-                {plan.description}
-              </p>
-
-              <div className="mb-8 pb-8 border-b border-foreground/10">
-                <span className="font-display text-4xl text-foreground">
-                  {plan.price}
+                <span className="font-mono text-xs text-muted-foreground">
+                  {String(idx + 2).padStart(2, "0")}
                 </span>
+                <h3 className="font-display text-3xl text-foreground mt-2 mb-2">
+                  {plan.name}
+                </h3>
+                <p className="text-sm text-muted-foreground mb-8">
+                  {plan.description}
+                </p>
+
+                <div className="mb-8 pb-8 border-b border-foreground/10">
+                  <span className="font-display text-4xl text-foreground">
+                    {plan.price}
+                  </span>
+                </div>
+
+                <ul className="space-y-4 mb-10">
+                  {plan.features.map((f) => (
+                    <li key={f} className="flex items-start gap-3">
+                      <Check className="w-4 h-4 text-foreground mt-0.5 shrink-0" />
+                      <span className="text-sm text-muted-foreground">{f}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <button
+                  type="button"
+                  disabled
+                  aria-label={`${plan.name} — coming soon`}
+                  className="w-full py-4 flex items-center justify-center gap-2 text-sm font-medium border border-foreground/20 text-foreground cursor-not-allowed"
+                >
+                  {plan.cta}
+                  <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                </button>
               </div>
-
-              <ul className="space-y-4 mb-10">
-                {plan.features.map((f) => (
-                  <li key={f} className="flex items-start gap-3">
-                    <Check className="w-4 h-4 text-foreground mt-0.5 shrink-0" />
-                    <span className="text-sm text-muted-foreground">{f}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <button
-                type="button"
-                disabled
-                className="w-full py-4 flex items-center justify-center gap-2 text-sm font-medium border border-foreground/20 text-foreground cursor-not-allowed"
-              >
-                {plan.cta}
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         {/* Bottom notes */}

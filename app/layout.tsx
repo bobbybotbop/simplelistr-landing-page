@@ -4,20 +4,24 @@ import { Instrument_Sans, Instrument_Serif, JetBrains_Mono } from 'next/font/goo
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const instrumentSans = Instrument_Sans({ 
+const instrumentSans = Instrument_Sans({
   subsets: ["latin"],
-  variable: '--font-instrument'
+  variable: '--font-instrument',
+  display: 'swap',
 });
 
-const instrumentSerif = Instrument_Serif({ 
+const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
   weight: "400",
-  variable: '--font-instrument-serif'
+  variable: '--font-instrument-serif',
+  display: 'swap',
 });
 
-const jetbrainsMono = JetBrains_Mono({ 
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  variable: '--font-jetbrains'
+  variable: '--font-jetbrains',
+  display: 'swap',
+  preload: false,
 });
 
 export const metadata: Metadata = {

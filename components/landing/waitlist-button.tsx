@@ -50,7 +50,7 @@ export function WaitlistButton({ variant = "light", waitlisted = false, size = "
       className={`${baseClasses} ${isXl ? "w-64" : "w-48"} gap-2 group disabled:opacity-60 disabled:cursor-not-allowed`}
     >
       {isLoading ? "Redirecting…" : "Join Waitlist"}
-      {!isLoading && <ArrowRight className={`transition-transform group-hover:translate-x-1 ${isXl ? "w-5 h-5" : "w-4 h-4"}`} />}
+      {!isLoading && <ArrowRight aria-hidden="true" className={`transition-transform group-hover:translate-x-1 ${isXl ? "w-5 h-5" : "w-4 h-4"}`} />}
     </button>
   );
 
