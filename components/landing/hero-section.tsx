@@ -25,7 +25,7 @@ export function HeroSection({ waitlisted = false }: HeroSectionProps) {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-start lg:justify-start pt-24 lg:pt-28 overflow-hidden">
+    <section className="relative min-h-[60vh] lg:min-h-screen flex flex-col justify-start lg:justify-start pt-24 lg:pt-28 pb-16 lg:pb-0 overflow-hidden">
       {/* Subtle grid lines */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
         {[...Array(8)].map((_, i) => (

@@ -21,12 +21,67 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'SimpleListr',
-  description: 'Use SimpleListr to research, write, and list infinite listings automatically.',
-  generator: 'v0.app',
+  metadataBase: new URL('https://simplelistr.com'),
+  title: {
+    default: 'SimpleListr — AI-Powered eBay Listing Tool',
+    template: '%s | SimpleListr',
+  },
+  description:
+    'SimpleListr automatically researches, writes, and lists your eBay items at scale. AI-powered listing creation, image thumbnail generation, and Google Trends research — list infinitely, scale infinitely.',
+  keywords: [
+    'eBay listing tool',
+    'automated eBay listings',
+    'AI eBay seller',
+    'eBay listing software',
+    'eBay reseller tool',
+    'bulk eBay listings',
+    'eBay listing automation',
+    'eBay dropshipping tool',
+    'Printables eBay listings',
+  ],
+  authors: [{ name: 'SimpleListr', url: 'https://simplelistr.com' }],
+  creator: 'SimpleListr',
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://simplelistr.com',
+    siteName: 'SimpleListr',
+    title: 'SimpleListr — AI-Powered eBay Listing Tool',
+    description:
+      'Automatically research, write, and list your eBay items with AI. Scale your eBay business without the manual work.',
+    images: [
+      {
+        url: '/logo.png',
+        width: 1080,
+        height: 1080,
+        alt: 'SimpleListr — AI-Powered eBay Listing Tool',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'SimpleListr — AI-Powered eBay Listing Tool',
+    description:
+      'Automatically research, write, and list your eBay items with AI. Scale your eBay business without the manual work.',
+    images: ['/logo.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   icons: {
-    icon: '/logo.png',
-    apple: '/logo.png',
+    icon: [
+      { url: '/icon-dark-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/icon.svg', type: 'image/svg+xml' },
+    ],
+    apple: '/apple-icon.png',
   },
 }
 
