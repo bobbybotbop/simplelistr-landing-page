@@ -44,21 +44,21 @@ export function HeroSection({ waitlisted = false }: HeroSectionProps) {
         ))}
       </div>
 
-      <div className="relative z-10 max-w-350 mx-auto px-6 lg:px-12 py-32 lg:py-40">
+      <div className="relative z-10 max-w-350 ml-12 px-2 lg:px-12 ">
         <div
           className={`mb-8 transition-all duration-700 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`}
         >
-          <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground">
+          <span className="inline-flex items-center gap-3 text-[clamp(0.65rem,2vw,0.875rem)] font-mono text-muted-foreground">
             <span className="w-8 h-px bg-foreground/30" />
             Work in progress — coming soon
           </span>
         </div>
 
-        <div className="mb-12">
+        <div className="mb-10">
           <h1
-            className={`text-[clamp(3rem,12vw,10rem)] font-display leading-[0.9] tracking-tight transition-all duration-1000 ${
+            className={`text-[clamp(2.5rem,9vw,7rem)] font-display leading-[0.9] tracking-tight transition-all duration-1000 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
@@ -82,23 +82,21 @@ export function HeroSection({ waitlisted = false }: HeroSectionProps) {
           </h1>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-end">
-          <p
-            className={`text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-xl transition-all duration-700 delay-200 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            }`}
-          >
-            Use SimpleListr to research, write, and list infinite listings
-            automatically. List infinitely. Scale infinitely.
-          </p>
+        <p
+          className={`text-[clamp(1rem,3vw,1.5rem)] text-muted-foreground leading-relaxed max-w-xl mb-12 transition-all duration-700 delay-200 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          }`}
+        >
+          Use SimpleListr to research, write, and list infinite listings
+          automatically. List infinitely. Scale infinitely.
+        </p>
 
-          <div
-            className={`flex items-start transition-all duration-700 delay-300 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            }`}
-          >
-            <WaitlistButton variant="light" waitlisted={waitlisted} />
-          </div>
+        <div
+          className={`flex justify-center lg:justify-start transition-all duration-700 delay-300 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          }`}
+        >
+          <WaitlistButton variant="light" waitlisted={waitlisted} size="xl" />
         </div>
       </div>
     </section>

@@ -12,7 +12,11 @@ const navLinks = [
   { name: "Pricing", href: "#pricing" },
 ];
 
-export function Navigation() {
+interface NavigationProps {
+  waitlisted?: boolean;
+}
+
+export function Navigation({ waitlisted = false }: NavigationProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -88,14 +92,20 @@ export function Navigation() {
             {/* <a href="#" className={`text-foreground/70 hover:text-foreground transition-all duration-500 ${isScrolled ? "text-xs" : "text-sm"}`}>
               Sign in
             </a> */}
-            <Button
-              size="sm"
-              onClick={handleJoinWaitlist}
-              disabled={isLoading}
-              className={`bg-foreground hover:bg-foreground/90 text-background rounded-full transition-all duration-500 disabled:opacity-60 ${isScrolled ? "px-4 h-8 text-xs" : "px-6"}`}
-            >
-              {isLoading ? "Redirecting…" : "Join waitlist"}
-            </Button>
+            {waitlisted ? (
+              <span className={`bg-foreground/10 text-foreground rounded-full font-medium transition-all duration-500 ${isScrolled ? "px-4 h-8 text-xs flex items-center" : "px-6 py-2 text-sm flex items-center"}`}>
+                You&apos;re on the list ✓
+              </span>
+            ) : (
+              <Button
+                size="sm"
+                onClick={handleJoinWaitlist}
+                disabled={isLoading}
+                className={`bg-foreground hover:bg-foreground/90 text-background rounded-full transition-all duration-500 disabled:opacity-60 ${isScrolled ? "px-4 h-8 text-xs" : "px-6"}`}
+              >
+                {isLoading ? "Redirecting…" : "Join waitlist"}
+              </Button>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -149,13 +159,19 @@ export function Navigation() {
             }`}
             style={{ transitionDelay: isMobileMenuOpen ? "300ms" : "0ms" }}
           >
-            <Button
-              className="flex-1 bg-foreground text-background rounded-full h-14 text-base disabled:opacity-60"
-              disabled={isLoading}
-              onClick={() => { setIsMobileMenuOpen(false); handleJoinWaitlist(); }}
-            >
-              {isLoading ? "Redirecting…" : "Join waitlist"}
-            </Button>
+            {waitlisted ? (
+              <div className="flex-1 bg-foreground/10 text-foreground rounded-full h-14 text-base flex items-center justify-center font-medium">
+                You&apos;re on the list ✓
+              </div>
+            ) : (
+              <Button
+                className="flex-1 bg-foreground text-background rounded-full h-14 text-base disabled:opacity-60"
+                disabled={isLoading}
+                onClick={() => { setIsMobileMenuOpen(false); handleJoinWaitlist(); }}
+              >
+                {isLoading ? "Redirecting…" : "Join waitlist"}
+              </Button>
+            )}
           </div>
         </div>
       </div>

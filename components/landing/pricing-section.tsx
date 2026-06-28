@@ -83,7 +83,10 @@ export function PricingSection({ waitlisted = false }: PricingSectionProps) {
         </div>
 
         {/* Pioneer — Featured */}
-        <div className="relative mb-px bg-foreground text-primary-foreground p-8 lg:p-12 border-2 border-foreground">
+        <div className="relative mb-px">
+          {/* Glow */}
+          <div className="absolute -inset-1 bg-linear-to-r from-pink-400 via-purple-500 to-pink-400 opacity-50 blur-xl rounded-sm pointer-events-none" />
+        <div className="relative bg-foreground text-primary-foreground p-8 lg:p-12 border-2 border-foreground">
           <span className="absolute -top-3 left-8 px-3 py-1 bg-primary-foreground text-foreground text-xs font-mono uppercase tracking-widest">
             {pioneer.badge}
           </span>
@@ -126,6 +129,7 @@ export function PricingSection({ waitlisted = false }: PricingSectionProps) {
               ))}
             </ul>
           </div>
+        </div>
         </div>
 
         {/* Paid plans — grayed out */}
