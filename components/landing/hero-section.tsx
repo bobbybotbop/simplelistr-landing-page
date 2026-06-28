@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { WaitlistButton } from "./waitlist-button";
 
 const words = ["list", "research", "write", "scale", "optimize"];
@@ -25,7 +25,7 @@ export function HeroSection({ waitlisted = false }: HeroSectionProps) {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden">
+    <section className="relative min-h-screen flex flex-col justify-start lg:justify-start pt-6 lg:pt-0 overflow-hidden">
       {/* Subtle grid lines */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
         {[...Array(8)].map((_, i) => (
@@ -44,9 +44,9 @@ export function HeroSection({ waitlisted = false }: HeroSectionProps) {
         ))}
       </div>
 
-      <div className="relative z-10 max-w-350 ml-12 px-2 lg:px-12 ">
+      <div className="relative z-10 w-full px-4 lg:max-w-350 lg:ml-12 lg:px-12 lg:w-auto">
         <div
-          className={`mb-8 transition-all duration-700 ${
+          className={`mb-6 transition-all duration-700 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`}
         >
@@ -56,10 +56,12 @@ export function HeroSection({ waitlisted = false }: HeroSectionProps) {
           </span>
         </div>
 
-        <div className="mb-10">
+        <div className="mb-8 lg:mb-10">
           <h1
-            className={`text-[clamp(2.5rem,9vw,7rem)] font-display leading-[0.9] tracking-tight transition-all duration-1000 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            className={`text-[clamp(1.875rem,7vw,7rem)] lg:text-[clamp(2.5rem,9vw,7rem)] font-display leading-[0.9] tracking-tight transition-all duration-1000 ${
+              isVisible
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-8"
             }`}
           >
             <span className="block">SimpleListr</span>
@@ -83,7 +85,7 @@ export function HeroSection({ waitlisted = false }: HeroSectionProps) {
         </div>
 
         <p
-          className={`text-[clamp(1rem,3vw,1.5rem)] text-muted-foreground leading-relaxed max-w-xl mb-12 transition-all duration-700 delay-200 ${
+          className={`text-[clamp(0.875rem,2.5vw,1.5rem)] text-muted-foreground leading-relaxed max-w-xl mb-8 lg:mb-12 transition-all duration-700 delay-200 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`}
         >
