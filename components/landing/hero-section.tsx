@@ -25,7 +25,7 @@ export function HeroSection({ waitlisted = false }: HeroSectionProps) {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-start lg:justify-start pt-6 lg:pt-0 overflow-hidden">
+    <section className="relative min-h-screen flex flex-col justify-start lg:justify-start pt-24 lg:pt-28 overflow-hidden">
       {/* Subtle grid lines */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
         {[...Array(8)].map((_, i) => (
@@ -44,7 +44,7 @@ export function HeroSection({ waitlisted = false }: HeroSectionProps) {
         ))}
       </div>
 
-      <div className="relative z-10 w-full px-4 lg:max-w-350 lg:ml-12 lg:px-12 lg:w-auto">
+      <div className="relative z-10 w-full px-6 lg:max-w-350 lg:ml-12 lg:px-12 lg:w-auto">
         <div
           className={`mb-6 transition-all duration-700 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
@@ -58,7 +58,7 @@ export function HeroSection({ waitlisted = false }: HeroSectionProps) {
 
         <div className="mb-8 lg:mb-10">
           <h1
-            className={`text-[clamp(1.875rem,7vw,7rem)] lg:text-[clamp(2.5rem,9vw,7rem)] font-display leading-[0.9] tracking-tight transition-all duration-1000 ${
+            className={`text-[clamp(3.5rem,12vw,7rem)] lg:text-[clamp(2.5rem,9vw,7rem)] font-display leading-[0.9] tracking-tight transition-all duration-1000 ${
               isVisible
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-8"
