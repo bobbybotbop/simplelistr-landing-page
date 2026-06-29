@@ -25,6 +25,12 @@ export function waitlistConfirmationHtml(email: string): string {
           We&apos;ll reach out when SimpleListr is ready to launch. Thanks for your
           patience &mdash; we&apos;re building something worth waiting for.
         </p>
+        <p style="font-size:16px;color:#555555;line-height:1.6;margin:0 0 40px;">
+          In the meantime, join our community for updates!<br />
+          <a href="https://discord.gg/GHFbqueQb" style="color:#0070f3;text-decoration:none;">https://discord.gg/GHFbqueQb</a>
+        </p>
+
+
         <p style="font-size:12px;color:#999999;margin:0;">
           SimpleListr &middot; You&apos;re receiving this because you joined the waitlist.
         </p>
