@@ -45,7 +45,10 @@ export async function GET(request: NextRequest) {
 
   const result = await addToWaitlist(email, userId);
 
-  if ("success" in result || "alreadyOnList" in result) {
+  if ("alreadyOnList" in result) {
+    return NextResponse.redirect(`${origin}/?waitlisted=true&already=true`);
+  }
+  if ("success" in result) {
     return NextResponse.redirect(`${origin}/?waitlisted=true`);
   }
 

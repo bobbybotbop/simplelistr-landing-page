@@ -5,12 +5,13 @@ import { FooterSection } from "@/components/landing/footer-section";
 import { WaitlistConfirmationTrigger } from "@/components/landing/waitlist-confirmation-trigger";
 
 interface HomeProps {
-  searchParams: Promise<{ waitlisted?: string; error?: string }>;
+  searchParams: Promise<{ waitlisted?: string; already?: string; error?: string }>;
 }
 
 export default async function Home({ searchParams }: HomeProps) {
   const params = await searchParams;
   const waitlisted = params.waitlisted === "true";
+  const alreadyOnList = params.already === "true";
   const authError = params.error === "true";
 
   return (
@@ -24,7 +25,7 @@ export default async function Home({ searchParams }: HomeProps) {
       <HeroSection waitlisted={waitlisted} />
       <PricingSection waitlisted={waitlisted} />
       <FooterSection />
-      <WaitlistConfirmationTrigger waitlisted={waitlisted} />
+      <WaitlistConfirmationTrigger waitlisted={waitlisted} alreadyOnList={alreadyOnList} />
     </main>
   );
 }

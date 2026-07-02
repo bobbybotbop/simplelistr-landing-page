@@ -6,13 +6,14 @@ import confetti from "canvas-confetti";
 interface WaitlistConfirmationModalProps {
   open: boolean;
   onClose: () => void;
+  alreadyOnList?: boolean;
 }
 
-export function WaitlistConfirmationModal({ open, onClose }: WaitlistConfirmationModalProps) {
+export function WaitlistConfirmationModal({ open, onClose, alreadyOnList = false }: WaitlistConfirmationModalProps) {
   const hasFiredRef = useRef(false);
 
   useEffect(() => {
-    if (!open || hasFiredRef.current) return;
+    if (!open || alreadyOnList || hasFiredRef.current) return;
     hasFiredRef.current = true;
 
     const end = Date.now() + 2500;
@@ -62,12 +63,20 @@ export function WaitlistConfirmationModal({ open, onClose }: WaitlistConfirmatio
         className="relative bg-background border border-foreground/10 rounded-3xl shadow-2xl p-8 max-w-sm w-full text-center animate-in fade-in zoom-in-90 duration-300"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="text-5xl mb-4">🎉</div>
-        <h2 className="text-2xl font-display font-semibold mb-2">You&apos;re on the list!</h2>
+        <div className="text-5xl mb-4">{alreadyOnList ? "👋" : "🎉"}</div>
+        <h2 className="text-2xl font-display font-semibold mb-2">
+          {alreadyOnList ? "You're already on the list!" : "You're on the list!"}
+        </h2>
         <p className="text-foreground/60 text-sm mb-6 leading-relaxed">
-          Thanks for joining the SimpleListr waitlist. We&apos;ll reach out when SimpleListr is released.
-          <br />
-          In the meantime, check your email for a discord server link!
+          {alreadyOnList ? (
+            "Looks like you've already signed up. We'll reach out when SimpleListr is released."
+          ) : (
+            <>
+              Thanks for joining the SimpleListr waitlist. We&apos;ll reach out when SimpleListr is released.
+              <br />
+              In the meantime, check your email for a discord server link!
+            </>
+          )}
         </p>
         <button
           onClick={onClose}
